@@ -14,6 +14,26 @@
 		<p:property name="age" value="23" />
 	</p:bean>
 	
+	<!-- This is for @Autowired 
+	<p:bean id="spellChecker" name="spellChecker" class="top.hulva.demo.spring.spring_demo.dependencyinjection.construtorbased.SpellChecker" />
+	
+	<p:bean id="textEditor" class="top.hulva.demo.spring.spring_demo.annotation.TextEditor">
+	</p:bean> -->
+	
+	<!-- This is for @Qualifier 
+	<p:bean id="profile" class="top.hulva.demo.spring.spring_demo.annotation.Profile">
+	</p:bean>
+	
+	<p:bean id="student1" class="top.hulva.demo.spring.spring_demo.annotation.Student">
+		<p:property name="name" value="Hua" />
+		<p:property name="age" value="24" />
+	</p:bean> -->
+	
+	<p:bean id="helloSpring" class="top.hulva.demo.spring.spring_demo.annotation.HelloSpring" 
+			init-method="init" destroy-method="destroy">
+			<p:property name="message" value="Hello Spring!" />
+	</p:bean>
+	
 	<!-- 这一句搞定上面的内容 
 	<context:component-scan base-package="top.hulva.demo.spring.spring_demo.annotation" />
 	-->
