@@ -1,4 +1,4 @@
-package top.hulva.demo.spring.spring_demo;
+package top.hulva.demo.spring.spring_demo.hellospring;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

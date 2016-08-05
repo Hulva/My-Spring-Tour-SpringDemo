@@ -1,4 +1,4 @@
-package top.hulva.demo.spring.spring_demo1;
+package top.hulva.demo.spring.spring_demo.beanpostprocessor;
 
 public class HelloSpring {
 	private String message;

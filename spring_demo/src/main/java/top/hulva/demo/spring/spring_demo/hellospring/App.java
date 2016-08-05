@@ -1,4 +1,4 @@
-package top.hulva.demo.spring.spring_demo;
+package top.hulva.demo.spring.spring_demo.hellospring;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

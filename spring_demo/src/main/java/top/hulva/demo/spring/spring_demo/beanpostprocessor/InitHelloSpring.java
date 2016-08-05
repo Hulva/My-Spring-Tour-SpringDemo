@@ -1,4 +1,4 @@
-package top.hulva.demo.spring.spring_demo1;
+package top.hulva.demo.spring.spring_demo.beanpostprocessor;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
