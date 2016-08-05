@@ -9,7 +9,7 @@
 		<p:property name="message" value="Welcome to Spring World!" />
 	</p:bean>
 	
-	<p:bean class="top.hulva.demo.spring.spring_demo.beanpostprocessor.InitHelloSpring" />
+	<!-- <p:bean class="top.hulva.demo.spring.spring_demo.beanpostprocessor.InitHelloSpring" /> -->
 
 	<!-- This is for beanDefinitionInheritanceDemo -->
 	<p:bean id="helloSpring2" class="top.hulva.demo.spring.spring_demo.beandefinitioninheritance.HelloSpring">
@@ -20,4 +20,88 @@
 		<p:property name="message1" value="That's funny! India." />
 		<p:property name="message2" value="What are talking about? Hello India?" />
 	</p:bean>
+	
+	<p:bean id="beanTemplate" abstract="true">
+		<p:property name="message" value="Welcome to Spring World!" />
+		<p:property name="message1" value="That's not funny! Spring." />
+		<p:property name="message2" value="What are talking about? Hello India?" />
+	</p:bean>
+	<p:bean id="helloIndia-fromTemplate" class="top.hulva.demo.spring.spring_demo.beandefinitioninheritance.beandefinitiontemplate.HelloIndia" parent="beanTemplate">
+		<p:property name="message" value="That's funny! India." />
+		<p:property name="message2" value="What are talking about? Hello India?" />
+	</p:bean>
+	
+	<!-- This is for Constructor-based Dependency Injection 
+	<p:bean id="textEditor" class="top.hulva.demo.spring.spring_demo.dependencyinjection.construtorbased.TextEditor">
+		<p:constructor-arg ref="spellChecker" />
+	</p:bean> -->
+	<p:bean id="spellChecker" name="spellChecker" class="top.hulva.demo.spring.spring_demo.dependencyinjection.construtorbased.SpellChecker" />
+	
+	<!-- This is for setter-based Dependency Injection 
+	<p:bean id="textEditor-setterBased" class="top.hulva.demo.spring.spring_demo.dependencyinjection.setterbased.TextEditor">
+		<p:property name="spellChecker" ref="spellChecker" />
+	</p:bean> -->
+	<!-- setter-based DI 之以inner bean的方式注入 
+	<p:bean id="textEditor-setterBased" class="top.hulva.demo.spring.spring_demo.dependencyinjection.setterbased.TextEditor">
+		<p:property name="spellChecker">
+			<p:bean id="spellChecker" class="top.hulva.demo.spring.spring_demo.dependencyinjection.construtorbased.SpellChecker" />
+		</p:property>
+	</p:bean>
+	-->
+	
+	<!-- This is for Dependency Injection of Injecting Collection -->
+	<p:bean id="javaCollection" class="top.hulva.demo.spring.spring_demo.dependencyinjection.injectcollection.JavaCollection">
+		<p:property name="addressList">
+			<p:list>
+				<p:value>Welcome</p:value>
+				<p:value>to</p:value>
+				<p:value>My</p:value>
+				<p:value>World</p:value>
+			</p:list>
+		</p:property>
+		<p:property name="addressSet">
+			<p:set>
+				<p:value>Welcome</p:value>
+				<p:value>to</p:value>
+				<p:value>My</p:value>
+				<p:value>World</p:value>
+			</p:set>
+		</p:property>
+		<p:property name="addressMap">
+			<p:map>
+				<p:entry key="1" value="Welcome" />
+				<p:entry key="2" value="to" />
+				<p:entry key="3" value="My" />
+				<p:entry key="4" value="World" />
+			</p:map>
+		</p:property>
+		<p:property name="addressProp">
+			<p:props>
+				<p:prop key="one">Welcome</p:prop>
+				<p:prop key="two">to</p:prop>
+				<p:prop key="three">My</p:prop>
+				<p:prop key="four">World</p:prop>
+			</p:props>
+		</p:property>
+	</p:bean>
+	
+	<!-- This is for autowire -->
+	<!-- 默认的写法 
+	<p:bean id="textEditor-autowireByName" class="top.hulva.demo.spring.spring_demo.autowire.byname.TextEditor">
+		<p:property name="spellChecker" ref="spellChecker" />
+		<p:property name="name" value="Hulva Text Editor" />
+	</p:bean> -->
+	<!-- ByName 
+	<p:bean id="textEditor-autowire" class="top.hulva.demo.spring.spring_demo.autowire.TextEditor" autowire="byName">
+		<p:property name="name" value="Hulva Text Editor" />
+	</p:bean> -->
+	<!-- ByType 
+	<p:bean id="textEditor-autowire" class="top.hulva.demo.spring.spring_demo.autowire.TextEditor" autowire="byType">
+		<p:property name="name" value="Hulva Text Editor" />
+	</p:bean> -->
+	<!-- ByConstructor 
+	<p:bean id="textEditor-autowire" class="top.hulva.demo.spring.spring_demo.autowire.TextEditor" autowire="constructor">
+		<p:constructor-arg value="Hulva Text Editor" />
+	</p:bean> -->
+	
 </p:beans>
