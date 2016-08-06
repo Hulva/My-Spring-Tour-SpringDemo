@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:beans xmlns:p="http://www.springframework.org/schema/beans" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xmlns:context="http://www.springframework.org/schema/context"  
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+		 http://www.springframework.org/schema/context
+		 http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<p:bean id="helloSpring" class="top.hulva.demo.spring.spring_demo.eventhandler.HelloSpring">
+		<p:property name="message" value="Hello, this is Hulva!" />
+	</p:bean>
+	
+	<p:bean id="cStartEventHandler" class="top.hulva.demo.spring.spring_demo.eventhandler.CStartEventHandler" />
+	
+	<p:bean id="cStopEventHandler" class="top.hulva.demo.spring.spring_demo.eventhandler.CStopEventHandler" />
+	
+</p:beans>
