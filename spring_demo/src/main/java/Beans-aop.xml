@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:beans xmlns:p="http://www.springframework.org/schema/beans" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns:aop="http://www.springframework.org/schema/aop"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		 http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop-4.3.xsd ">
+
+	<aop:config>
+		<!-- Declaring an aspect -->
+		<aop:aspect id="log" ref="logging">
+			<!-- Declaring an pointcut -->
+			<aop:pointcut expression="execution(* top.hulva.demo.spring.spring_demo.aop.xmlschemabased.*.*(..))" id="selectAll"/>
+			<!--  将表达式中的*换成具体的类和方法，便可将切点加到特定的方法上
+			<aop:pointcut expression="execution(* top.hulva.demo.spring.spring_demo.aop.xmlschemabased.Logging.getName(..))" id="selectAll"/> -->
+			<!-- Declaring advices -->
+			<aop:before method="beforeAdvice" pointcut-ref="selectAll"/>
+			<aop:after method="afterAdvice" pointcut-ref="selectAll"/>
+			<aop:after-returning method="afterReturningAdvice" returning="returnVal" pointcut-ref="selectAll"/>
+			<aop:after-throwing method="afterThrowingAdvice" throwing="e" pointcut-ref="selectAll"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<p:bean id="student" class="top.hulva.demo.spring.spring_demo.aop.xmlschemabased.Student">
+		<p:property name="name" value="hulva" />
+		<p:property name="age" value="23" />
+	</p:bean>
+	
+	<p:bean id="logging" class="top.hulva.demo.spring.spring_demo.aop.xmlschemabased.Logging" />
+	
+</p:beans>

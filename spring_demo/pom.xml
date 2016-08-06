@@ -129,6 +129,12 @@
 	    <artifactId>cglib-nodep</artifactId>
 	    <version>3.2.4</version>
 	</dependency>
+	<!-- for AOP 好像不需要 有aspectjweaver 就行了？
+	<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	    <version>1.8.9</version>
+	</dependency> -->
 	  	
   
     <dependency>
