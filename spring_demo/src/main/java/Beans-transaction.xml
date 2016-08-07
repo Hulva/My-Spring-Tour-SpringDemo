@@ -13,14 +13,17 @@
       <property name="password" value="hualv930216"/>
    </bean>
 
-   <!-- 定义studentJDBCTemplate bean -->
-   <bean id="studentJDBCTemplate" 
-      class="top.hulva.demo.spring.spring_demo.jdbc.StudentJDBCTemplate">
+	<!-- Initialization for TransactionManager -->
+   <bean id="transactionManager" 
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
-   <bean id="studentJDBCTemplate1" 
-      class="top.hulva.demo.spring.spring_demo.jdbc.StudentJDBCTemplate1">
-      <property name="dataSource"  ref="dataSource" />    
+   
+   <!-- 定义studentJDBCTemplate bean -->
+   <bean id="studentJDBCTemplate" 
+      class="top.hulva.demo.spring.spring_demo.transaction.StudentJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />   
+      <property name="transactionManager"  ref="transactionManager" /> 
    </bean>
       
 </beans>

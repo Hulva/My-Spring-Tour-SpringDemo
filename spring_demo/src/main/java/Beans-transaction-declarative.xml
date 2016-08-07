@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+   <!-- 初始化dataSource -->
+   <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/TEST"/>
+      <property name="username" value="root"/>
+      <property name="password" value="hualv930216"/>
+   </bean>
+   
+   <tx:advice id="txtAdvice" transaction-manager="transactionManager">
+   	<tx:attributes>
+   		<tx:method name="insert"/>
+   	</tx:attributes>
+   </tx:advice>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* top.hulva.demo.spring.spring_demo.transaction.declarative.StudentJDBCTemplate.insert(..))" id="insertOperation"/>
+		<aop:advisor advice-ref="txtAdvice" pointcut-ref="insertOperation"/>
+	</aop:config>
+
+	<!-- Initialization for TransactionManager -->
+   <bean id="transactionManager" 
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <!-- 定义studentJDBCTemplate bean -->
+   <bean id="studentJDBCTemplate1" 
+      class="top.hulva.demo.spring.spring_demo.transaction.declarative.StudentJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />   
+   </bean>
+      
+</beans>

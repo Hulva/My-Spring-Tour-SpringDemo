@@ -32,7 +32,7 @@ public class StudentJDBCTemplate implements IStudentDao {
 	}
 
 	public List<Student> selectStudents() {
-		String sql = "SELECT * FROM STUDNET";
+		String sql = "SELECT * FROM STUDENT";
 		List<Student> students = jdbcTemplateObject.query(sql, new StudentMapper());
 		return students;
 	}
