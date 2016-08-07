@@ -1,5 +1,6 @@
 package top.hulva.demo.springmvc;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class StudentController {
-
-	static Logger log = Logger.getLogger(MainApp.class.getName());
 
 	@RequestMapping(value = "/student", method = RequestMethod.GET)
 	public ModelAndView student() {
@@ -30,7 +29,7 @@ public class StudentController {
 	@RequestMapping(value = "/addStudent", method = RequestMethod.POST)
 	@ExceptionHandler({ SpringException.class })
 	public String addStudent(@ModelAttribute("HelloWeb") Student student, ModelMap model) {
-
+		
 		if (student.getName().length() < 5) {
 			throw new SpringException("Given name is too short");
 		} else {
