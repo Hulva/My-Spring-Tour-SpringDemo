@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/aop 
+  http://www.springframework.org/schema/aop/spring-aop-4.3.xsd 
+  http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+  <bean id="duke" class="top.hulva.demo.springinaction.take1.Juggler">
+  </bean>
+  
+  <bean id="cary" class="top.hulva.demo.springinaction.take1.Juggler">
+  	<constructor-arg value="15" />
+  </bean>
+  
+  <bean id="sonnet29" class="top.hulva.demo.springinaction.take1.Sonnet29" />
+  
+  <bean id="poeticDuke" class="top.hulva.demo.springinaction.take1.PoeticJuggler">
+  	<constructor-arg ref="sonnet29" />
+  </bean>
+  
+  <bean id="poeticCary" class="top.hulva.demo.springinaction.take1.PoeticJuggler">
+  	<constructor-arg value="15" />
+  	<constructor-arg ref="sonnet29" />
+  </bean>
+  
+  <bean id="theStage" class="top.hulva.demo.springinaction.take1.Stage" 
+  		factory-method="getInstance" />
+
+	<bean id="auditorium" class="top.hulva.demo.springinaction.take1.Auditorium"
+		   init-method="turnOnLights" destroy-method="turnOffLights"	/>
+<!-- 
+  <aop:config>
+    <aop:aspect ref="minstrel">
+      <aop:pointcut id="embark"
+          expression="execution(* *.embarkOnQuest(..))"/>
+        
+      <aop:before pointcut-ref="embark" 
+          method="singBeforeQuest"/>
+
+      <aop:after pointcut-ref="embark" 
+          method="singAfterQuest"/>
+    </aop:aspect>
+  </aop:config>
+ -->  
+</beans>
