@@ -25,7 +25,7 @@
   // 布尔型的 true 和 false
   <property name="count" value="#{false}" />
 ```
-	2. 引用 Bean、property 和方法 <br />
+	2. 引用 Bean、property 和方法
 	?. 运算符代替 . 来访问 toUpperCase() 方法，在访问右边的方法之前， ?. 运算符会确保左边项的值不会为 null ，当左边项的值为null时，SpEL将不再尝试调用右边的方法。
 ```
 	// ID为“saxphone”的Bean装配到另一个Bean的属性中
@@ -71,9 +71,9 @@
 | :------| :-----| :-------|
 | 等于    | ==    |	eq	   |
 | 小于    | <     |	lt	   |
-| 小于等于 | <=    |	le	   |
+| 小于等于 | <=    |	le	  |
 | 大于    | >     |	gt	   |
-| 大于等于 | >=    |	ge	   |
+| 大于等于 | >=    |	ge	  |
 ```
 	<property name="largeCicle" value="#{shape.kind == 'circle' and shape.perimeter gt 1000}" />
 	<property name="outOfStock" value="#{!product.available}" />
@@ -108,7 +108,7 @@
 		<bean class="top.hulva.example.cities.City"
 			p:name="Las Cruces" p:state="NM" p:population="213586" />
 	</util:list>
-	
+
 	<property name="choseCity" value="#{cities[2]}" />
 	<property name="choseCity" value="#{cities[T(java.lang.Math).random() * cities.size()]}" />
 ```
@@ -129,7 +129,7 @@
 	<property name="bigCities" value="#{cities.?[population gt 1000]}" />
 	<property name="aBigCities" value="#{cities.^[population gt 1000]}" />
 	<property name="aBigCities" value="#{cities.$[population gt 1000]}" />
-	
+
 ```
 	集合投影 是从集合的每一个成员中选择特定的属性放入一个新集合中。投影运算符 .![]
 ```
@@ -143,6 +143,3 @@
 
 	* BeanFactory 最简单的容器，提供基础的依赖注入和Bean装配服务
 	* ApplicationContext 拥有更高级的框架服务
-	
-
-

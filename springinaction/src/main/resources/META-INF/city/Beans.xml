@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:p="http://www.springframework.org/schema/p" 
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+  http://www.springframework.org/schema/util 
+  http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<util:list id="cities">
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="AnQing" p:state="IL" p:population="13456516" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="SuZhou" p:state="GA" p:population="13216516" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="HangZhou" p:state="TX" p:population="1394516" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="ZheJiang" p:state="NM" p:population="134536516" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="HeFei" p:state="NM" p:population="1332516" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="Xi'An" p:state="TX" p:population="1345616" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="ChangSha" p:state="GA" p:population="133233656" />
+		<bean class="top.hulva.demo.springinaction.cities.City"
+			p:name="NanJin" p:state="IL" p:population="1343516" />
+	</util:list>
+	
+	<!-- <bean id="citySelector" class="top.hulva.demo.springinaction.cities.CitySelector">
+		<property name="city" value="#{cities[2].getName().toUpperCase()}" />
+	</bean>
+	 -->
+	<bean id="citySelector" class="top.hulva.demo.springinaction.cities.CitySelector">
+		<property name="city" value="#{cities[T(java.lang.Math).random() * cities.size()].getName().toUpperCase()}" />
+	</bean>
+	
+	<bean id="saxphone" class="top.hulva.demo.springinaction.cities.Saxphone">
+		<property name="song" value="#{songSelector.getSong(T(java.lang.Math).random() * 4).toUpperCase()}" />
+	</bean>
+	<bean id="songSelector" class="top.hulva.demo.springinaction.cities.SongSelector">
+	</bean>
+	<bean id="performer" class="top.hulva.demo.springinaction.cities.Performer">
+		<property name="instrument" ref="saxphone" />
+	</bean>
+</beans>
