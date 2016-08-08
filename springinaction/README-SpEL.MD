@@ -25,7 +25,8 @@
   // 布尔型的 true 和 false
   <property name="count" value="#{false}" />
 ```
-	2. 引用 Bean、property 和方法
+	2. 引用 Bean、property 和方法 <br />
+	?. 运算符代替 . 来访问 toUpperCase() 方法，在访问右边的方法之前， ?. 运算符会确保左边项的值不会为 null ，当左边项的值为null时，SpEL将不再尝试调用右边的方法。
 ```
 	// ID为“saxphone”的Bean装配到另一个Bean的属性中
 	<property name="instrument" value="#{saxphone}" />
@@ -45,7 +46,6 @@
 	// SpEL中避免抛出空指针异常的方法,使用null-safe存取器
 	<property name="song" value="#{songSelector.selectSong()?.toUpperCase()}" />
 ```
-	?. 运算符代替 . 来访问 toUpperCase() 方法，在访问右边的方法之前， ?. 运算符会确保左边项的值不会为 null ，当左边项的值为null时，SpEL将不再尝试调用右边的方法。
 	3. 操作类
 	在SpEL中，使用 T() 运算符调用类作用域的方法和常量。
 ```
@@ -140,6 +140,7 @@
 
 ## Spring容器
 > Spring自带了多种容器的实现，可归为两类：
+
 	* BeanFactory 最简单的容器，提供基础的依赖注入和Bean装配服务
 	* ApplicationContext 拥有更高级的框架服务
 	
