@@ -16,3 +16,4 @@
 
 ## Spring In Action
   * [Spring Expression Language](./springinaction/README-SpEL.MD)
+  * [Hibernate](./springinaction/README-hibernate.MD)
