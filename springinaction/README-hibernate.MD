@@ -92,7 +92,5 @@
   ```
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
   ```
-  
-  PersistenceExceptionTranslationPostProcessor是一个Bean的后置处理程序，它会在所有拥有@Repository注解的类上添加一个通知器(advisor)，这样就会捕获任何平台相关的异常并以Spring的非检查型数据访问异常的形式重新抛出。
 
-### Spring 与 Java 持久化API
+  PersistenceExceptionTranslationPostProcessor是一个Bean的后置处理程序，它会在所有拥有@Repository注解的类上添加一个通知器(advisor)，这样就会捕获任何平台相关的异常并以Spring的非检查型数据访问异常的形式重新抛出。
