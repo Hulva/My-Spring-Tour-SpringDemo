@@ -17,6 +17,7 @@
 > _org.hibernate.Session_ Session接口提供了基本的数据访问功能，如保存、更新、删除以及从数据库加载对象的功能。
 在配置Hibernate Session工厂Bean时，我们需要确定持久化域对象是通过XML文件还是通过注解来进行配置。
   * 在XML中定义对象和数据库之间的映射，那么需要在Spring中配置LocalSessionFactoryBean:
+
   ```
     <bean id="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
@@ -32,7 +33,9 @@
       </property>
     </bean>
   ```
+
   * 注解方式定义持久化，需要使用AnnotationSessionFactoryBean
+
   ```
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnoationSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
@@ -44,7 +47,9 @@
       </property>
     </bean>
   ```
+
   packageToScann属性告诉Spring扫描一个或多个包以查找域类，使用JPA的@Entity或@MappedSuperclass注解以及Hibernate的@Entity注解进行标注的类都会包含在内。
+
   ```
     // 扫描多个包
     <property name="packageToScann">
@@ -61,35 +66,33 @@
   @Repository
   public class HibernateSampleDao implements ISampleDao {
     private SessionFactory sessionFactory;
-
     @Autowired
     public HibernateSampleDao(SessionFactory sessionFactory) {
       this.sessionFactory = sessionFactory;
     }
-
     public Session currentSession() {
       return this.sessionFactory.getCurrentSession();
     }
-
     public insert(Sample sample){
       currentSession().save(sample);
     }
-
     public Sample selectByID(Integer id) {
       return (Sample)currentSession().get(Sample.class, id);
     }
-
     public void update(Sample sample) {
       currentSession().update(sample);
     }
    }
 ```
+
   _@Repository_ 的两个用处：
   1. 能够使对象被 <context:component-scan> 扫描到，这样酒不必声明 此DAO Bean了
   2. 给不使用模板的Hibernate DAO添加异常转换功能，我们只需在Spring应用上下文添加一个PersistenceExceptionTranslationPostProcessor Bean:
+
   ```
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
   ```
+  
   PersistenceExceptionTranslationPostProcessor是一个Bean的后置处理程序，它会在所有拥有@Repository注解的类上添加一个通知器(advisor)，这样就会捕获任何平台相关的异常并以Spring的非检查型数据访问异常的形式重新抛出。
 
 ### Spring 与 Java 持久化API
