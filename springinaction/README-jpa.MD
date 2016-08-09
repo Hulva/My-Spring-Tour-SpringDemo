@@ -66,3 +66,11 @@ database属性：
     }
   }
 ```
+
+JpaSampleDao使用EntityManager处理持久化。em属性上的 _@PersistenceContext_ 注解表明需要将一个EntityManager实例注入到em上，在Spring上下文中配置一个 _PersistenceAnnotationBeanPostProcessor_ :
+```
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+```
+  * _@Transactional_ 注解表明这个DAO中的持久化方法是在事务上下文中执行的。
+  * _@Repository_ 的作用与Hibernate上下文Session版本的DAO中的是一样的。
+  * Spring 简化数据访问的方式之一就是管理数据连接的生命和ORM框架的Session，以确保他们根据需要打开或关闭。
