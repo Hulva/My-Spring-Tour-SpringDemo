@@ -98,4 +98,66 @@ Spring 对声明式事务的支持是通过使用Spring AOP框架来实现的。
 
  - 事务属性（描述了事务策略如何应用到方法上）
  * 传播行为（propagation behavior） 定义了客户端与被调用方法之间的事务边界
- ![](../img/propagation-behavior.png)
+ ![](../img/propagation-behavior.PNG)
+ * 隔离级别（isolation level） 定义了一个事务可能受其他并发事务影响的程度。另一种考虑事务的方式就是将其想象成事务对于事务性数据的自私程度？？
+ > 并发可能导致的问题：
+  * 脏读（Dirty reads） 一个事务读取了另一个事务改写但尚未提交的数据。
+  * 不可重复读（Nonrepeatable read） 一个事务执行相同的查询两次或两次以上，但每次都得到不同的数据。通常这是由于另一个并发事务在多次查询期间更新了数据。
+  * 幻读（Phantom read） 与不可重复读类似。一个事务由于另一并发事务的插入操作而发现原本不存在的记录的情况。
+  理想情况下，事务之间是完全隔离的，从而防止这些问题的发生。但完全隔离会导致性能问题，它通常会设计锁定数据库中的记录（有时甚至是整张表）。侵占性的锁定会阻碍并发性。
+  ![](../img/isolation-level.png)
+  _ISOLATION_READ_UNCOMMITTED_ 是最高效的事务隔离级别，但是事务隔离的程度最低，事务可能会导致脏读、不可重复读以及幻读。另一个极端就是 _ISOLATION-SERIALIZABLE_ 能阻止所有的隔离问题但最低效。
+  * 只读（readonly） 事务只对后端的数据库进行读操作，数据库可利用事务的只读特性进行一些特定的优化。
+  * 事务超时（timeout） 长时间的事务会不必要的占用数据库资源。对那些具备可能启动一个新事务的传播行为（PROPAGATION_REQUIRED、PROPAGATION_REQUIRES_NEW以及PROPAGATION_NESTED）的方法来说，声明事务超时才有意义。
+  * 回滚规则（rollback rule） 规则定义了哪些异常会导致事务回滚而哪些不会。默认情况下只有在遇到运行时异常时才会回滚。但是可以设定在遇到特定的检查型异常时像遇到运行时异常那样回滚。
+
+### 在XML中定义事务
+> 使用 _tx_ 命名空间配置生命式事务。
+```
+  <tx:advice id="txAdvice">
+    <tx:attributes>
+      <tx:method name="save*" propagation="REQUIRED" />
+      <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+    </tx:attributes>
+  </tx:advice>
+```
+根据约定优于配置，<tx:advice>假定事务管理器被声明为一个id为transactionManager的Bean，如果事务管理器被配置成为了一个不同的id（如txManager），则需要在transaction-manager属性中指明：
+```
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+      <tx:method name="save*" propagation="REQUIRED" />
+      <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+    </tx:attributes>
+  </tx:advice>
+```
+<tx:method>有多个属性来帮助定义方法的策略：
+![](../img/transaction-5.png)
+<tx:advice>只是定义了AOP通知，用于把事务边界通知给方法，而不是完整的事务性切面。定义一个通知器（advisor）:
+```
+  <aop:config>
+    <aop:advisor pointcut="execution(* *..SampleService.*(..))" advice-ref="txAdvice" />
+  </aop:config>
+```
+
+### 注解驱动的事务
+使用注解你只需在XML中添加这么一行就够了
+```
+  <tx:annotation-driven />
+```
+在多一点就是你没有使用事务管理器的默认命名transactionManager
+```
+  <tx:annotation-driven transaction-manager="txManager" />
+```
+<tx:annotation-driven /> 元素告诉Spring检查上下文中所有的Bean并查找使用@Transactional注解的Bean，并自动给它们添加事务通知，事务通知的属性通过@Transactional注解的参数来定义。
+```
+  @Transactional(propagation=Propagation.SUPPORTS, readOnly=true)
+  public class SampleServiceImpl implements ISampleService {
+    ...
+    @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+    public void insert() {
+      ...
+    }
+    ...
+  }
+```
+在类级别上使用了@Transactional注解表示所有的方法都支持事务并且只读；在方法级别上通过注解来标识这个方法所需要的事务上下文。
