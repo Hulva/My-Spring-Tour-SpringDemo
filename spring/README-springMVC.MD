@@ -1,26 +1,34 @@
 ## Spring MVC
 
 ### 配置 DispatcherServlet
-> 修改 web.xml 文件，添加以下内容：
-
+> 修改 web.xml 文件，添加以下内容用以加载DispatcherServlet 以及DispatcherServlet要处理哪些URL。常见DispatcherServlet的匹配模式 ：
 ```
 	<servlet>
 	 <servlet-name>Dispatcher</servlet-name>
 	 <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 	 <load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
 	 <servlet-name>Dispatcher</servlet-name>
 	 <url-pattern>/</url-pattern>
 	</servlet-mapping>
 ```
->	添加 SpringMVC 的Dispatcher的默认配置文件 Dispatcher-servlet.xml 【与web.xml同目录，名称为上面所取的<servlet-name>-serlet.xml】
+>	默认情况下DispatcherServlet在加载时会从一个基于这个Servlet名字的XML文件中加载Spring应用上下文。XML文件 Dispatcher-servlet.xml 【与web.xml同目录，名称为上面所取的<servlet-name>-serlet.xml】
 
 ### 静态资源
 > Spring 的MVC命名空间包含了一个新的<mvc:resources> 元素，他会处理静态资源的请求。
 ```
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+		<!-- 处理对静态资源的请求 -->
+		<mvc:resources mapping="/resources/**" location="/resources/" />
+	</beans>
 ```
 
 ### 注解驱动特性
